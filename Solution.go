@@ -33,10 +33,10 @@ var columns = 0
 func numberOfCleanRooms(room [][]int) int {
 	rows = len(room)
 	columns = len(room[0])
-	return breadthFirstSearchToFindMaxCleanedPoints(room)
+	return breadthFirstSearchToFindMaxCleanedPoints(&room)
 }
 
-func breadthFirstSearchToFindMaxCleanedPoints(room [][]int) int {
+func breadthFirstSearchToFindMaxCleanedPoints(room *[][]int) int {
 	queue := list.New()
 	queue.PushBack(NewPoint(0, 0, 0))
 
@@ -57,7 +57,7 @@ func breadthFirstSearchToFindMaxCleanedPoints(room [][]int) int {
 		var nextRow = current.(*Point).Row + currentDirectionToNextCoordinates[current.(*Point).Direction][0]
 		var nextColumn = current.(*Point).Column + currentDirectionToNextCoordinates[current.(*Point).Direction][1]
 
-		if !isInRoom(nextRow, nextColumn) || room[nextRow][nextColumn] == OBSTACLE {
+		if !isInRoom(nextRow, nextColumn) || (*room)[nextRow][nextColumn] == OBSTACLE {
 			var newDirection = rotate90DegreesClockwise(current.(*Point).Direction)
 			if isVisitedWithGivenDirection(current.(*Point).Row, current.(*Point).Column, newDirection) {
 				break
